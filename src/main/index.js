@@ -20,12 +20,7 @@ function MainPage(){
     
 
     return (
-        <div>
-            <div id="header">
-            <div id="header-area">
-                <img src="images/icons/logo.png" />
-            </div>
-        </div>
+    <div>   
         <div id="body">
             <div id="banner">
                 <img src="images/banners/banner1.png" />
@@ -59,8 +54,7 @@ function MainPage(){
                 }
                 
             </div>
-        </div>
-        <div id="footer"></div>
+        </div>  
     </div>
     );
 }
