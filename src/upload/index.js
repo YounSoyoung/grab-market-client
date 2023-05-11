@@ -1,11 +1,28 @@
 import './index.css';
-import { Button, Divider, Form, Input, InputNumber, Upload } from "antd";
+import { Button, Divider, Form, Input, InputNumber, message, Upload } from "antd";
 import { useState } from 'react';
+import { API_URL } from '../config/constants';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function UploadPage(){
     const [imageUrl, setImageUrl] = useState(null);
+    const navigate = useNavigate();
+
     const onSubmit = (values) => {
-        console.log(values);
+        axios.post(`${API_URL}/products`, {
+            name: values.name,
+            description: values.description,
+            seller : values.seller,
+            price: parseInt(values.price), //문자열로 된 숫자를 parseInt를 이용해 숫자로 바꿔준다.
+            imageUrl : imageUrl
+        }).then((result) => {
+            console.log(result);
+            navigate('/', {replace: true})
+        }).catch((error) => {
+            console.log(error);
+            message.error(`에러가 발생했습니다. ${error.message}`)
+        })
     }
     const onChangeImage = (info) => {
         if(info.file.status === 'uploading'){
@@ -23,13 +40,13 @@ function UploadPage(){
                 <Form.Item name="upload" label={<div className='upload-label'>상품 사진</div>}>
                     <Upload 
                     name='image' 
-                    action="http://localhost:8080/image" 
+                    action={`${API_URL}/image`} 
                     listType='picture'
                     showUploadList={false}
                     onChange={onChangeImage}
                     >
                         {
-                            imageUrl ?  <img id='upload-img' src={`http://localhost:8080/${imageUrl}`} /> : 
+                            imageUrl ?  <img id='upload-img' src={`${API_URL}/${imageUrl}`} /> : 
                             (<div id="upload-img-placeholder">
                                 <img src="/images/icons/camera.png"/>
                                 <span>이미지를 업로드해주세요</span>
@@ -78,7 +95,7 @@ function UploadPage(){
                 </Form.Item>
                 <Form.Item>
                     <Button id='submit-button' size='large' htmlType='submit'>
-                        문제 등록하기
+                        상품 등록하기
                     </Button>
                 </Form.Item>
             </Form>
