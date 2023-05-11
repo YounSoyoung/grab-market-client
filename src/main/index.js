@@ -2,6 +2,10 @@ import './index.css';
 import axios from 'axios';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+dayjs.extend(relativeTime);
 
 // axios 사용을 위해 터미널에 npm install axios를 입력하여 설치해주기
 
@@ -9,7 +13,7 @@ function MainPage(){
     const [products, setProducts] = React.useState([]);
     React.useEffect(function(){
         axios
-        .get('https://e3e44655-948f-4c30-bd23-ab3bc78126e6.mock.pstmn.io/products')
+        .get('http://localhost:8080/products')
         .then(function(result){
             const products = result.data.products;
             setProducts(products);
@@ -42,9 +46,12 @@ function MainPage(){
                                     <span className='product-price'>
                                         {product.price}원
                                     </span>
-                                    <div className='product-seller'>
-                                        <img className='product-avatar' src='images/icons/avatar.png' />
-                                        <span>{product.seller}</span>
+                                    <div className='product-footer'>
+                                        <div className='product-seller'>
+                                            <img className='product-avatar' src='images/icons/avatar.png' />
+                                            <span>{product.seller}</span>
+                                        </div>
+                                        <span className='product-date'>{dayjs(product.createdAt).fromNow()}</span>
                                     </div>
                                 </div>
                                 </Link>

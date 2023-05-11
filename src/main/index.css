@@ -56,7 +56,6 @@
 .product-seller {
     display: flex;
     align-items: center;
-    margin-top: 12px;
 }
 
 .product-avatar {
@@ -69,4 +68,16 @@
     /* 텍스트의 밑줄을 없앤다 */
     text-decoration: none;
 
+}
+
+.product-footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+}
+
+.product-date{
+    font-size: 12px;
+    color: rgb(136, 136, 136);
 }
